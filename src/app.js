@@ -1,9 +1,14 @@
 const express = require("express");
 
 const app = express();
+const { adminAuth, userAuth } = require("./middleware/auth");
 
-app.use("/", (req, res) => {
-  res.send("Hello from the server!");
+// Handle Auth middleware for all requests
+
+app.use("/admin", adminAuth);
+
+app.get("/user", userAuth, (req, res) => {
+  res.send("get Data for usersss");
 });
 
 app.listen(3000, () => {
