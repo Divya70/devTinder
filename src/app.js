@@ -18,6 +18,32 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+// Get API -get , to get all the users from the database
+app.get("/users", async (req, res) => {
+  const userEmail = req.body.email;
+  console.log(req.body);
+
+  try {
+    const user = await User.findOne({ email: userEmail });
+    if (user.length === 0) {
+      return res.status(404).send("User not found");
+    } else {
+      res.json(user);
+    }
+  } catch (err) {
+    res.status(400).send("Error fetching users:", err.message);
+  }
+});
+
+app.get("/feed", async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.json(users);
+  } catch (err) {
+    res.status(400).send("Error fetching users:", err.message);
+  }
+});
+
 connectDB()
   .then(() => {
     console.log("Database connection estabished");
