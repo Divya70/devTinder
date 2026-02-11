@@ -55,10 +55,21 @@ app.delete("/users", async (req, res) => {
   }
 });
 
-app.patch("/users", async (req, res) => {
-  const userId = req.body.userId;
+app.patch("/users/:userId", async (req, res) => {
+  const userId = req.params?.userId;
   const data = req.body;
+
   try {
+    const ALLOWED_UPDATES = ["photoUrl", "about", "skills", "age", "gender"];
+    const isAllowedUpdates = Object.keys(data).every((update) =>
+      ALLOWED_UPDATES.includes(update),
+    );
+    if (!isAllowedUpdates) {
+      throw new Error("Updates not allowed");
+    }
+    if (data.skills.length > 10) {
+      throw new Error("You can add up to 10 skills only");
+    }
     await User.findByIdAndUpdate({ _id: userId }, data, {
       returnDocument: "after",
       runValidators: true,
