@@ -10,3 +10,10 @@ Cookies- whenever user login to the website , server sends the JWT token inside 
 
 => This JWT toekn divide into three colors , Red , Purple , Blue
 one is header , payload and signature
+
+=> Store a connection request to a database
+
+=> Read about ref and populate
+
+=> Pagination
+skip = (page-1)\*limit;
