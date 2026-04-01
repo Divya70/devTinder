@@ -40,6 +40,7 @@ requestRouter.post(
         toUserId,
         status,
       });
+
       const data = await connectionRequest.save();
 
       res.json({
@@ -80,6 +81,7 @@ requestRouter.post(
           .status(404)
           .json({ message: "Connection request not found" });
       }
+      console.log("Found request:", connectionRequest);
       connectionRequest.status = status;
       const data = await connectionRequest.save();
       res.json({
